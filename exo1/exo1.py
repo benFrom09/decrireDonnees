@@ -1,8 +1,8 @@
-from csv import reader
-opened_file = open("../code(1)/analyse/operations.csv",encoding="utf-8")
-data = list(reader(opened_file))
-#header of dataset
-dataset_header = data[0]
+import pandas as pd 
+
+data1 = pd.read_csv('../code(1)/analyse/operations.csv',parse_dates=[1,2])
+
+
 # lets do a function to explore data
 def explore_data(dataset,start,end):
     data_slice = dataset[start:end]
@@ -11,10 +11,8 @@ def explore_data(dataset,start,end):
         print('\n')
     print("length: ",len(dataset))
 
-#print header to see variable 
-print("Header:",dataset_header)
 #print 2 rows of dataset
-print(explore_data(data,1,len(data)-1))
+print(explore_data(data1,1,len(data1)-1))
 #
 #We want to determine some categories and operationtype in your habits
 # shopping place ...etc 
@@ -25,10 +23,9 @@ def find_most_common_word(dataset):
     words = []
     #create a dictionary to store the result 
     most_common_word = {}
-    for transaction in dataset[1:]:
-        libelle = transaction[3]
+    for transaction in dataset:
         #add the splitted array in words array
-        words += libelle.split(" ")
+        words += transaction.split(" ")
     for w in words:
         name = w
         if name not in most_common_word:
@@ -38,7 +35,7 @@ def find_most_common_word(dataset):
     return most_common_word
 
 
-most_common_words = find_most_common_word(data[1:])
+most_common_words = find_most_common_word(data1["libelle"])
 
 print(most_common_words)
 
@@ -63,4 +60,8 @@ TYPES = {
     'PRLV': 'PRELEVEMENT',
     'DON': 'DON',
 }
+
+##let's organise the dataset
+
+
 
